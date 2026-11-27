@@ -88,6 +88,22 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .wstars{padding:0 8px 10px;text-align:center;font-size:13px;letter-spacing:3px;color:var(--gold1)}
 .wcard.r4 .wstars{color:var(--violet1)}
 .enter .wsec{animation:rise .55s .75s both}
+/* artifacts */
+.asec{margin-top:40px}
+.alist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.acard{position:relative;display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:start;padding:14px;border:3px solid var(--line);border-radius:12px;background:var(--surface)}
+.acard.r5{border-color:var(--gold1)}
+.acard.r4{border-color:var(--violet1)}
+.aimg{position:relative;aspect-ratio:1/1;border-radius:8px;background:#fff;overflow:hidden}
+.aimg img{display:block;width:100%;height:100%;object-fit:contain}
+.aimg .rank{left:6px;top:6px;font-size:12px;padding:0 8px}
+.aname{margin:2px 0 10px;font-family:var(--serif);font-weight:800;font-size:19px;letter-spacing:.06em;color:var(--ink)}
+.aset{margin:0}
+.aset dt{font-size:13px;font-weight:700;color:var(--violet1);letter-spacing:.04em}
+.aset dd{margin:2px 0 12px;font-size:15px;line-height:1.75;color:var(--ink);word-break:keep-all}
+.aset dd:last-child{margin-bottom:0}
+@media (max-width:520px){.acard{grid-template-columns:1fr;gap:12px}.aimg{width:112px}}
+.enter .asec{animation:rise .55s .85s both}
 @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 @keyframes zoom{from{transform:scale(1.08)}to{transform:scale(1)}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -125,6 +141,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
   <div class="dstars" id="dstars" role="img"></div>
   <dl class="info" id="dinfo"></dl>
   <section class="wsec" id="wsec"><div class="whead"><h3>추천 무기</h3><button type="button" class="gbtn" id="gbtn" aria-pressed="false">그래프</button></div><ol class="wgrid" id="wgrid"></ol><ol class="wgraph" id="wgraph" hidden></ol></section>
+  <section class="wsec asec" id="asec"><div class="whead"><h3>추천 성유물</h3></div><ol class="alist" id="alist"></ol></section>
 </main>
 
 <script>
@@ -133,7 +150,8 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
     {id:"anastasia",n:"아나스타샤",s:5,photo:"img/anastasia.webp",
      art:"img/art.webp",artPos:"50% 15%",
      info:[["신의 심장","얼음"],["무기","활"]],
-     weapons:[{n:"미정",s:5,r:1,p:100,img:"img/w0.webp"},{n:"옥빛 장궁",s:4,r:5,p:90.1,img:"img/w1.webp"},{n:"최초의 대마술",s:5,r:1,p:89.2,img:"img/w2.webp"},{n:"비뢰의 고동",s:5,r:1,p:86.8,img:"img/w3.webp"},{n:"천공의 날개",s:5,r:1,p:85.7,img:"img/w4.webp"},{n:"극지의 별",s:5,r:1,p:82.8,img:"img/w5.webp"},{n:"약수",s:5,r:1,p:82.2,img:"img/w6.webp"},{n:"옥빛 장궁",s:4,r:1,p:80.6,img:"img/w7.webp"}]},
+     weapons:[{n:"미정",s:5,r:1,p:100,img:"img/w0.webp"},{n:"옥빛 장궁",s:4,r:5,p:90.1,img:"img/w1.webp"},{n:"최초의 대마술",s:5,r:1,p:89.2,img:"img/w2.webp"},{n:"비뢰의 고동",s:5,r:1,p:86.8,img:"img/w3.webp"},{n:"천공의 날개",s:5,r:1,p:85.7,img:"img/w4.webp"},{n:"극지의 별",s:5,r:1,p:82.8,img:"img/w5.webp"},{n:"약수",s:5,r:1,p:82.2,img:"img/w6.webp"},{n:"옥빛 장궁",s:4,r:1,p:80.6,img:"img/w7.webp"}],
+     artifacts:[{n:"태초 역사의 유산",s:5,img:"img/a0.webp",sets:[["2세트","공격력+18%"],["4세트","장착 캐릭터가 원소전투 스킬, 원소폭발을 발동하거나 일반 공격 시 「성화」를 1개 획득한다. 최대 2개까지 보유할 수 있다. 「성화」 보유 시 장착 캐릭터는 「꺼지지 않는 빛」을 획득한다: 주는 얼음 원소 피해의 치명타 확률이 20% 증가하며, 해당 피해가 별빛 반응 피해일 경우, 치명타 확률이 추가로 20% 증가한다. 장착 캐릭터가 대기 상태일 때도 해당 효과는 적용되며, 장착 캐릭터가 필드에 있을 시 3초마다 「성화」가 1개 제거된다. 「성화」가 전부 소멸한 후 「꺼지지 않는 빛」이 제거된다"]]}]},
     {id:null,n:"다니카",s:5,photo:"img/danika.webp"}
   ];
   var g=document.getElementById("grid"),lv=document.getElementById("listview"),dv=document.getElementById("detailview");
@@ -170,6 +188,8 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
       document.getElementById("dinfo").innerHTML=c.info.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
       document.getElementById("wgrid").innerHTML=(c.weapons||[]).map(function(w,i){return "<li class='wcard r"+w.s+"'><span class='rank'>"+(i+1)+"순위</span><div class='wimg'><img src='"+w.img+"' alt='"+w.n+"' draggable='false'></div><div class='wname'>"+w.n+"</div><div class='wref'>"+w.r+"재련</div><div class='wstars' role='img' aria-label='"+w.s+"성'>"+stars(w.s)+"</div></li>"}).join("");
       document.getElementById("wsec").hidden=!(c.weapons&&c.weapons.length);
+      document.getElementById("alist").innerHTML=(c.artifacts||[]).map(function(a,i){return "<li class='acard r"+a.s+"'><div class='aimg'><span class='rank'>"+(i+1)+"순위</span><img src='"+a.img+"' alt='"+a.n+"' draggable='false'></div><div><div class='aname'>"+a.n+"</div><dl class='aset'>"+a.sets.map(function(x){return "<dt>"+x[0]+"</dt><dd>"+x[1]+"</dd>"}).join("")+"</dl></div></li>"}).join("");
+      document.getElementById("asec").hidden=!(c.artifacts&&c.artifacts.length);
       cur=c;setMode(false);
       lv.hidden=true;dv.hidden=false;document.title=c.n+" – 원신 캐릭터 육성 가이드";
       dv.classList.remove("enter");void dv.offsetWidth;dv.classList.add("enter");
