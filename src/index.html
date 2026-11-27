@@ -94,18 +94,22 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
 /* artifacts */
 .asec{margin-top:40px}
 .alist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
-.acard{position:relative;display:grid;grid-template-columns:112px 1fr;gap:18px;align-items:start;padding:14px;border:3px solid var(--line);border-radius:12px;background:var(--surface)}
+.acard{position:relative;display:grid;grid-template-columns:112px minmax(0,1fr);grid-template-areas:"img text";gap:18px;align-items:start;padding:14px;border:3px solid var(--line);border-radius:12px;background:var(--surface)}
 .acard.r5{border-color:var(--gold1)}
 .acard.r4{border-color:var(--violet1)}
-.aimg{position:relative;aspect-ratio:1/1;border-radius:8px;background:#fff;overflow:hidden}
+.acard.has-g{grid-template-columns:112px minmax(0,1fr) 200px;grid-template-areas:"img text graph"}
+.aimg{grid-area:img;position:relative;aspect-ratio:1/1;border-radius:8px;background:#fff;overflow:hidden}
 .aimg img{display:block;width:100%;height:100%;object-fit:contain}
 .aimg .rank{left:6px;top:6px;font-size:12px;padding:0 8px}
+.atext{grid-area:text;min-width:0}
+.agraph{grid-area:graph;align-self:center;display:grid;grid-template-columns:minmax(0,1fr) 54px;gap:10px;align-items:center}
+.agraph .bar{animation-delay:calc(var(--i)*.08s + .9s)}
 .aname{margin:2px 0 10px;font-family:var(--serif);font-weight:800;font-size:19px;letter-spacing:.06em;color:var(--ink)}
 .aset{margin:0}
 .aset dt{font-size:13px;font-weight:700;color:var(--violet1);letter-spacing:.04em}
 .aset dd{margin:2px 0 12px;font-size:15px;line-height:1.75;color:var(--ink);word-break:keep-all}
 .aset dd:last-child{margin-bottom:0}
-@media (max-width:520px){.acard{grid-template-columns:1fr;gap:12px}.aimg{width:112px}}
+@media (max-width:620px){.acard,.acard.has-g{grid-template-columns:96px minmax(0,1fr);grid-template-areas:"img graph" "text text";gap:12px 16px}.acard:not(.has-g){grid-template-areas:"img ." "text text"}}
 .enter .asec{animation:rise .55s .85s both}
 /* main stats */
 .msec{margin-top:40px}
@@ -172,9 +176,9 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
      art:"img/mitya_art.webp",
      info:[["신의 심장","번개"],["무기","법구"]],
      weapons:[{n:"별빛 계시",s:5,r:1,p:100},{n:"서릿빛 새벽",s:4,r:5,p:93},{n:"진실의 함",s:5,r:1,p:92},{n:"얼어붙은 심장",s:4,r:5,p:92},{n:"왕들의 대국",s:4,r:5,p:91},{n:"나른한 새해",s:5,r:1,p:90},{n:"제사의 옥",s:4,r:5,p:88},{n:"서릿빛 새벽",s:4,r:1,p:88},{n:"얼어붙은 심장",s:4,r:1,p:88},{n:"왕들의 대국",s:4,r:1,p:87},{n:"방랑하는 저녁별",s:4,r:5,p:86},{n:"카구라의 진의",s:5,r:1,p:85},{n:"음유시인의 악장",s:4,r:5,p:80}],
-     artifacts:[{n:"그림자 속 산산조각 난 꿈",s:5,img:"img/mi_a0.webp",sets:[["2세트","공격력+18%"],["4세트","초전도 반응으로 주는 피해가 80% 증가하고, 별 초전도 반응으로 주는 피해가 40% 증가한다. 장착 캐릭터가 초전도 또는 별 초전도 반응의 영향을 받은 적 공격 시, 해당 공격의 치명타 확률이 16% 증가한다"]]},
-                {n:"원소 마스터리 2세트 + 2세트",s:5,img:"img/mi_a2.webp",sets:[["2세트 + 2세트","원소 마스터리+160pt (원소 마스터리+80pt 효과가 있는 세트 2종을 2세트씩 장착)"],["조합 가능한 세트","대지를 유랑하는 악단 · 잃어버린 낙원의 꽃 · 도금된 꿈 중 2종"]]},
-                {n:"도금된 꿈",s:5,img:"img/mi_a1.webp",sets:[["2세트","원소 마스터리+80pt"],["4세트","원소 반응 발동 후 8초 동안 파티 내 다른 캐릭터의 원소 타입에 따라 장착 캐릭터가 강화 효과를 받는다: 파티 내 장착 캐릭터와 동일한 원소 타입의 캐릭터가 1명 존재할 때마다 공격력이 14% 증가한다. 파티 내 장착 캐릭터와 다른 원소 타입의 캐릭터가 1명 존재할 때마다 원소 마스터리가 50pt 증가한다. 해당 효과는 각각 최대 3명의 캐릭터까지 계산한다. 해당 효과는 8초마다 최대 1회 발동된다. 장착 캐릭터가 대기 상태일 때도 해당 효과는 발동된다"]]}],
+     artifacts:[{n:"그림자 속 산산조각 난 꿈",s:5,p:100,img:"img/mi_a0.webp",sets:[["2세트","공격력+18%"],["4세트","초전도 반응으로 주는 피해가 80% 증가하고, 별 초전도 반응으로 주는 피해가 40% 증가한다. 장착 캐릭터가 초전도 또는 별 초전도 반응의 영향을 받은 적 공격 시, 해당 공격의 치명타 확률이 16% 증가한다"]]},
+                {n:"원소 마스터리 2세트 + 2세트",s:5,p:100,img:"img/mi_a2.webp",sets:[["2세트 + 2세트","원소 마스터리+160pt (원소 마스터리+80pt 효과가 있는 세트 2종을 2세트씩 장착)"],["조합 가능한 세트","대지를 유랑하는 악단 · 잃어버린 낙원의 꽃 · 도금된 꿈 중 2종"]]},
+                {n:"도금된 꿈",s:5,p:99,img:"img/mi_a1.webp",sets:[["2세트","원소 마스터리+80pt"],["4세트","원소 반응 발동 후 8초 동안 파티 내 다른 캐릭터의 원소 타입에 따라 장착 캐릭터가 강화 효과를 받는다: 파티 내 장착 캐릭터와 동일한 원소 타입의 캐릭터가 1명 존재할 때마다 공격력이 14% 증가한다. 파티 내 장착 캐릭터와 다른 원소 타입의 캐릭터가 1명 존재할 때마다 원소 마스터리가 50pt 증가한다. 해당 효과는 각각 최대 3명의 캐릭터까지 계산한다. 해당 효과는 8초마다 최대 1회 발동된다. 장착 캐릭터가 대기 상태일 때도 해당 효과는 발동된다"]]}],
      mains:[["시계","원소 마스터리","img/mi_m0.webp"],["성배","원소 마스터리","img/mi_m1.webp"],["왕관","치명타 확률/피해%","img/mi_m2.webp"]]}
   ];
   var g=document.getElementById("grid"),lv=document.getElementById("listview"),dv=document.getElementById("detailview");
@@ -215,7 +219,8 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
       document.getElementById("dinfo").innerHTML=c.info.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
       document.getElementById("wgrid").innerHTML=(c.weapons||[]).map(function(w,i){return "<li class='wcard r"+w.s+"'><span class='rank'>"+(i+1)+"순위</span><div class='wimg'>"+(w.img?"<img src='"+w.img+"' alt='"+w.n+"' draggable='false'>":"")+"</div><div class='wname'>"+w.n+"</div><div class='wref'>"+w.r+"재련</div><div class='wstars' role='img' aria-label='"+w.s+"성'>"+stars(w.s)+"</div></li>"}).join("");
       document.getElementById("wsec").hidden=!(c.weapons&&c.weapons.length);
-      document.getElementById("alist").innerHTML=(c.artifacts||[]).map(function(a,i){return "<li class='acard r"+a.s+"'><div class='aimg'><span class='rank'>"+(i+1)+"순위</span><img src='"+a.img+"' alt='"+a.n+"' draggable='false'></div><div><div class='aname'>"+a.n+"</div><dl class='aset'>"+a.sets.map(function(x){return "<dt>"+x[0]+"</dt><dd>"+x[1]+"</dd>"}).join("")+"</dl></div></li>"}).join("");
+      var arts=c.artifacts||[],amx=Math.max.apply(null,arts.map(function(a){return a.p==null?-1:a.p}));
+      document.getElementById("alist").innerHTML=arts.map(function(a,i){var g=a.p!=null,top=g&&a.p===amx?" top":"";return "<li class='acard r"+a.s+(g?" has-g":"")+"'><div class='aimg'><span class='rank'>"+(i+1)+"순위</span><img src='"+a.img+"' alt='"+a.n+"' draggable='false'></div><div class='atext'><div class='aname'>"+a.n+"</div><dl class='aset'>"+a.sets.map(function(x){return "<dt>"+x[0]+"</dt><dd>"+x[1]+"</dd>"}).join("")+"</dl></div>"+(g?"<div class='agraph'><div class='track'><div class='bar"+top+"' style='--w:"+a.p+"%;--i:"+i+"'></div></div><div class='pct"+top+"'>"+a.p+"%</div></div>":"")+"</li>"}).join("");
       document.getElementById("asec").hidden=!(c.artifacts&&c.artifacts.length);
       document.getElementById("mlist").innerHTML=(c.mains||[]).map(function(m){return "<li class='mcard'>"+(m[2]?"<div class='mimg'><img src='"+m[2]+"' alt='' draggable='false'></div>":"")+"<div class='mslot'>"+m[0]+"</div><div class='mval'>"+m[1]+"</div></li>"}).join("");
       document.getElementById("msec").hidden=!(c.mains&&c.mains.length);
