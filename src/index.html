@@ -167,6 +167,11 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
 .enter .ssec{animation:rise .55s 1.05s both}
 .enter .tsec{animation:rise .55s 1.15s both}
 .enter .psec{animation:rise .55s 1.25s both}
+/* weapon list: show 5, rest behind 더보기 */
+.wsec.fold .wgraph li:nth-child(n+6),.wsec.fold .wgrid li:nth-child(n+6){display:none}
+.wmore{display:block;width:100%;margin-top:14px;min-height:44px;font:inherit;font-size:15px;font-weight:700;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer}
+.wmore:hover{border-color:var(--gold2);color:var(--gold1)}
+.wmore:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 @keyframes zoom{from{transform:scale(1.08)}to{transform:scale(1)}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -203,7 +208,7 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
   <h2 id="dname"></h2>
   <div class="dstars" id="dstars" role="img"></div>
   <dl class="info" id="dinfo"></dl>
-  <section class="wsec" id="wsec"><div class="whead"><h3>추천 무기</h3><button type="button" class="gbtn" id="gbtn" aria-pressed="false">그래프</button></div><ol class="wgrid" id="wgrid"></ol><ol class="wgraph" id="wgraph" hidden></ol></section>
+  <section class="wsec" id="wsec"><div class="whead"><h3>추천 무기</h3><button type="button" class="gbtn" id="gbtn" aria-pressed="false">그래프</button></div><ol class="wgrid" id="wgrid"></ol><ol class="wgraph" id="wgraph" hidden></ol><button type="button" class="wmore" id="wmore" aria-expanded="false" hidden></button></section>
   <section class="wsec asec" id="asec"><div class="whead"><h3>추천 성유물</h3></div><ol class="alist" id="alist"></ol></section>
   <section class="wsec msec" id="msec"><div class="whead"><h3>주옵션</h3></div><ul class="mlist" id="mlist"></ul></section>
   <section class="wsec ssec" id="ssec"><div class="whead"><h3>권장 스펙</h3></div><ul class="slist" id="slist"></ul><p class="note" id="snote"></p></section>
@@ -277,6 +282,16 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
     }
   }
   document.getElementById("gbtn").addEventListener("click",function(){setMode(!gmode)});
+  var FOLD=5;
+  function setFold(on){
+    var sec=document.getElementById("wsec"),b=document.getElementById("wmore"),n=(cur&&cur.weapons||[]).length;
+    sec.classList.toggle("fold",on&&n>FOLD);b.hidden=n<=FOLD;
+    b.setAttribute("aria-expanded",on?"false":"true");b.textContent=on?"더보기 ("+(n-FOLD)+"개) ▾":"접기 ▴";
+  }
+  document.getElementById("wmore").addEventListener("click",function(){
+    var folding=!document.getElementById("wsec").classList.contains("fold");setFold(folding);
+    if(folding)document.getElementById("wsec").scrollIntoView({block:"start",behavior:"smooth"});
+  });
   function show(){
     var id=(location.hash||"").slice(1),c=C.filter(function(x){return x.id&&x.id===id&&x.art&&x.ready!==false})[0];
     if(c){
@@ -301,7 +316,7 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
       document.getElementById("tsec").hidden=!(c.talents&&c.talents.length);
       document.getElementById("tmlist").innerHTML=(c.teams||[]).map(function(t,i){return "<li class='pcard"+(i===0?" top":"")+"'><div class='phead'><span class='rank' style='position:static'>"+(i+1)+"순위</span><span class='pname'>"+t.n+"</span>"+(t.tag?"<span class='ptag'>"+t.tag+"</span>":"")+"</div><ul class='pmem'>"+t.m.map(function(x){return "<li><div class='pava r"+x[2]+(x[0]===c.n?" me":"")+"'><img src='"+x[1]+"' alt='' draggable='false'></div><small>"+x[0]+"</small><em>"+x[3]+"</em></li>"}).join("")+"</ul><p class='pdesc'>"+t.d+"</p></li>"}).join("");
       document.getElementById("psec").hidden=!(c.teams&&c.teams.length);
-      cur=c;setMode(true);
+      cur=c;setMode(true);setFold(true);
       lv.hidden=true;dv.hidden=false;document.title=c.n+" – 원신 캐릭터 육성 가이드";
       dv.classList.remove("enter");void dv.offsetWidth;dv.classList.add("enter");
     }else{
