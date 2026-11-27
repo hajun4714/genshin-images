@@ -204,7 +204,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
       document.getElementById("asec").hidden=!(c.artifacts&&c.artifacts.length);
       document.getElementById("mlist").innerHTML=(c.mains||[]).map(function(m){return "<li class='mcard'>"+(m[2]?"<div class='mimg'><img src='"+m[2]+"' alt='' draggable='false'></div>":"")+"<div class='mslot'>"+m[0]+"</div><div class='mval'>"+m[1]+"</div></li>"}).join("");
       document.getElementById("msec").hidden=!(c.mains&&c.mains.length);
-      cur=c;setMode(false);
+      cur=c;setMode(true);
       lv.hidden=true;dv.hidden=false;document.title=c.n+" – 원신 캐릭터 육성 가이드";
       dv.classList.remove("enter");void dv.offsetWidth;dv.classList.add("enter");
     }else{
