@@ -108,9 +108,11 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .msec{margin-top:40px}
 .mlist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .mcard{padding:16px 12px;border:2px solid var(--line);border-radius:12px;background:var(--surface);text-align:center}
+.mimg{width:84px;max-width:100%;aspect-ratio:1/1;margin:0 auto 10px;border-radius:10px;background:#fff;overflow:hidden}
+.mimg img{display:block;width:100%;height:100%;object-fit:contain}
 .mslot{font-size:13px;font-weight:700;color:var(--violet1);letter-spacing:.06em}
 .mval{margin-top:4px;font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:.04em;color:var(--gold1);word-break:keep-all}
-@media (max-width:420px){.mlist{gap:8px}.mcard{padding:14px 6px}.mval{font-size:15px}}
+@media (max-width:420px){.mlist{gap:8px}.mcard{padding:12px 6px}.mimg{width:72px}.mval{font-size:15px}}
 .enter .msec{animation:rise .55s .95s both}
 @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 @keyframes zoom{from{transform:scale(1.08)}to{transform:scale(1)}}
@@ -161,7 +163,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
      info:[["신의 심장","얼음"],["무기","활"]],
      weapons:[{n:"미정",s:5,r:1,p:100,img:"img/w0.webp"},{n:"옥빛 장궁",s:4,r:5,p:90.1,img:"img/w1.webp"},{n:"최초의 대마술",s:5,r:1,p:89.2,img:"img/w2.webp"},{n:"비뢰의 고동",s:5,r:1,p:86.8,img:"img/w3.webp"},{n:"천공의 날개",s:5,r:1,p:85.7,img:"img/w4.webp"},{n:"극지의 별",s:5,r:1,p:82.8,img:"img/w5.webp"},{n:"약수",s:5,r:1,p:82.2,img:"img/w6.webp"},{n:"옥빛 장궁",s:4,r:1,p:80.6,img:"img/w7.webp"}],
      artifacts:[{n:"태초 역사의 유산",s:5,img:"img/a0.webp",sets:[["2세트","공격력+18%"],["4세트","장착 캐릭터가 원소전투 스킬, 원소폭발을 발동하거나 일반 공격 시 「성화」를 1개 획득한다. 최대 2개까지 보유할 수 있다. 「성화」 보유 시 장착 캐릭터는 「꺼지지 않는 빛」을 획득한다: 주는 얼음 원소 피해의 치명타 확률이 20% 증가하며, 해당 피해가 별빛 반응 피해일 경우, 치명타 확률이 추가로 20% 증가한다. 장착 캐릭터가 대기 상태일 때도 해당 효과는 적용되며, 장착 캐릭터가 필드에 있을 시 3초마다 「성화」가 1개 제거된다. 「성화」가 전부 소멸한 후 「꺼지지 않는 빛」이 제거된다"]]}],
-     mains:[["시계","공격력%"],["성배","공격력%"],["왕관","치명타 확률%"]]},
+     mains:[["시계","공격력%","img/m0.webp"],["성배","공격력%","img/m1.webp"],["왕관","치명타 확률%","img/m2.webp"]]},
     {id:null,n:"다니카",s:5,photo:"img/danika.webp"}
   ];
   var g=document.getElementById("grid"),lv=document.getElementById("listview"),dv=document.getElementById("detailview");
@@ -200,7 +202,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
       document.getElementById("wsec").hidden=!(c.weapons&&c.weapons.length);
       document.getElementById("alist").innerHTML=(c.artifacts||[]).map(function(a,i){return "<li class='acard r"+a.s+"'><div class='aimg'><span class='rank'>"+(i+1)+"순위</span><img src='"+a.img+"' alt='"+a.n+"' draggable='false'></div><div><div class='aname'>"+a.n+"</div><dl class='aset'>"+a.sets.map(function(x){return "<dt>"+x[0]+"</dt><dd>"+x[1]+"</dd>"}).join("")+"</dl></div></li>"}).join("");
       document.getElementById("asec").hidden=!(c.artifacts&&c.artifacts.length);
-      document.getElementById("mlist").innerHTML=(c.mains||[]).map(function(m){return "<li class='mcard'><div class='mslot'>"+m[0]+"</div><div class='mval'>"+m[1]+"</div></li>"}).join("");
+      document.getElementById("mlist").innerHTML=(c.mains||[]).map(function(m){return "<li class='mcard'>"+(m[2]?"<div class='mimg'><img src='"+m[2]+"' alt='' draggable='false'></div>":"")+"<div class='mslot'>"+m[0]+"</div><div class='mval'>"+m[1]+"</div></li>"}).join("");
       document.getElementById("msec").hidden=!(c.mains&&c.mains.length);
       cur=c;setMode(false);
       lv.hidden=true;dv.hidden=false;document.title=c.n+" – 원신 캐릭터 육성 가이드";
