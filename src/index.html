@@ -167,7 +167,11 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
      weapons:[{n:"미정",s:5,r:1,p:100,img:"img/w0.webp"},{n:"옥빛 장궁",s:4,r:5,p:90.1,img:"img/w1.webp"},{n:"최초의 대마술",s:5,r:1,p:89.2,img:"img/w2.webp"},{n:"비뢰의 고동",s:5,r:1,p:86.8,img:"img/w3.webp"},{n:"천공의 날개",s:5,r:1,p:85.7,img:"img/w4.webp"},{n:"극지의 별",s:5,r:1,p:82.8,img:"img/w5.webp"},{n:"약수",s:5,r:1,p:82.2,img:"img/w6.webp"},{n:"옥빛 장궁",s:4,r:1,p:80.6,img:"img/w7.webp"}],
      artifacts:[{n:"태초 역사의 유산",s:5,img:"img/a0.webp",sets:[["2세트","공격력+18%"],["4세트","장착 캐릭터가 원소전투 스킬, 원소폭발을 발동하거나 일반 공격 시 「성화」를 1개 획득한다. 최대 2개까지 보유할 수 있다. 「성화」 보유 시 장착 캐릭터는 「꺼지지 않는 빛」을 획득한다: 주는 얼음 원소 피해의 치명타 확률이 20% 증가하며, 해당 피해가 별빛 반응 피해일 경우, 치명타 확률이 추가로 20% 증가한다. 장착 캐릭터가 대기 상태일 때도 해당 효과는 적용되며, 장착 캐릭터가 필드에 있을 시 3초마다 「성화」가 1개 제거된다. 「성화」가 전부 소멸한 후 「꺼지지 않는 빛」이 제거된다"]]}],
      mains:[["시계","공격력%","img/m0.webp"],["성배","공격력%","img/m1.webp"],["왕관","치명타 확률%","img/m2.webp"]]},
-    {id:null,n:"다니카",s:5,photo:"img/danika.webp"}
+    {id:null,n:"다니카",s:5,photo:"img/danika.webp"},
+    {id:"mitya",n:"미탸",s:5,ready:false,photo:"img/mitya.webp",
+     art:"img/mitya_art.webp",
+     info:[["신의 심장","번개"],["무기","법구"]],
+     weapons:[{n:"별빛 계시",s:5,r:1,p:100},{n:"서릿빛 새벽",s:4,r:5,p:93},{n:"진실의 함",s:5,r:1,p:92},{n:"얼어붙은 심장",s:4,r:5,p:92},{n:"왕들의 대국",s:4,r:5,p:91},{n:"나른한 새해",s:5,r:1,p:90}]}
   ];
   var g=document.getElementById("grid"),lv=document.getElementById("listview"),dv=document.getElementById("detailview");
   var tm,toast=document.createElement("div");toast.className="toast";toast.setAttribute("role","status");toast.setAttribute("aria-live","polite");document.body.appendChild(toast);
@@ -193,7 +197,7 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
       var ws=cur.weapons,mx=Math.max.apply(null,ws.map(function(w){return w.p}));
       gg.innerHTML=ws.map(function(w,i){
         var top=w.p===mx?" top":"";
-        return "<li class='grow' style='--i:"+i+"'><div class='gicon r"+w.s+"'><img src='"+w.img+"' alt='' draggable='false'></div><div class='glabel'><b>"+w.n+"</b><small>"+w.r+"재련</small></div><div class='track'><div class='bar"+top+"' style='--w:"+w.p+"%'></div></div><div class='pct"+top+"'>"+w.p+"%</div></li>";
+        return "<li class='grow' style='--i:"+i+"'><div class='gicon r"+w.s+"'>"+(w.img?"<img src='"+w.img+"' alt='' draggable='false'>":"")+"</div><div class='glabel'><b>"+w.n+"</b><small>"+w.r+"재련</small></div><div class='track'><div class='bar"+top+"' style='--w:"+w.p+"%'></div></div><div class='pct"+top+"'>"+w.p+"%</div></li>";
       }).join("");
     }
   }
@@ -205,7 +209,7 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
       document.getElementById("dname").textContent=c.n;
       var ds=document.getElementById("dstars");ds.textContent=stars(c.s);ds.setAttribute("aria-label",c.s+"성");
       document.getElementById("dinfo").innerHTML=c.info.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
-      document.getElementById("wgrid").innerHTML=(c.weapons||[]).map(function(w,i){return "<li class='wcard r"+w.s+"'><span class='rank'>"+(i+1)+"순위</span><div class='wimg'><img src='"+w.img+"' alt='"+w.n+"' draggable='false'></div><div class='wname'>"+w.n+"</div><div class='wref'>"+w.r+"재련</div><div class='wstars' role='img' aria-label='"+w.s+"성'>"+stars(w.s)+"</div></li>"}).join("");
+      document.getElementById("wgrid").innerHTML=(c.weapons||[]).map(function(w,i){return "<li class='wcard r"+w.s+"'><span class='rank'>"+(i+1)+"순위</span><div class='wimg'>"+(w.img?"<img src='"+w.img+"' alt='"+w.n+"' draggable='false'>":"")+"</div><div class='wname'>"+w.n+"</div><div class='wref'>"+w.r+"재련</div><div class='wstars' role='img' aria-label='"+w.s+"성'>"+stars(w.s)+"</div></li>"}).join("");
       document.getElementById("wsec").hidden=!(c.weapons&&c.weapons.length);
       document.getElementById("alist").innerHTML=(c.artifacts||[]).map(function(a,i){return "<li class='acard r"+a.s+"'><div class='aimg'><span class='rank'>"+(i+1)+"순위</span><img src='"+a.img+"' alt='"+a.n+"' draggable='false'></div><div><div class='aname'>"+a.n+"</div><dl class='aset'>"+a.sets.map(function(x){return "<dt>"+x[0]+"</dt><dd>"+x[1]+"</dd>"}).join("")+"</dl></div></li>"}).join("");
       document.getElementById("asec").hidden=!(c.artifacts&&c.artifacts.length);
