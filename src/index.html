@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title>원신 캐릭터 육성 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Nanum+Myeongjo:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#12152e;--surface:#1b1f3f;--ink:#e8eaf8;--muted:#a3a9d0;--line:#32376a;
+  --gold1:#f1c75a;--gold2:#a8731a;--violet1:#b58be6;--violet2:#5d3c97;
+  --serif:"Nanum Myeongjo","Noto Serif KR",serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;caret-color:transparent}
+.card,.card *{-webkit-user-select:none;user-select:none;-webkit-user-drag:none}
+img{-webkit-user-drag:none}
+html{background:var(--bg);scroll-behavior:auto}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;line-height:1.7;font-size:16px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
+[hidden]{display:none!important}
+@media (min-width:1280px){body{zoom:1.1}}
+@media (min-width:1600px){body{zoom:1.15}}
+@media (min-width:2200px){body{zoom:1.15}}
+.wrap{max-width:900px;margin:0 auto;padding:0 20px}
+header{padding:48px 0 24px}
+h1{font-family:var(--serif);font-size:clamp(26px,6vw,38px);font-weight:800;letter-spacing:.06em;line-height:1.35;margin:0;color:var(--gold1);background:linear-gradient(90deg,#f6dc8a,#d9a93a 55%,#f6dc8a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+header p{color:var(--muted);margin:14px 0 0;letter-spacing:.08em;font-size:14px}
+header p::before{content:"";display:block;width:48px;height:2px;background:var(--gold2);margin-bottom:14px}
+.grid{list-style:none;margin:0;padding:0 0 56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.card{display:block;color:inherit;text-decoration:none;border-radius:12px;overflow:hidden;background:var(--surface);border:3px solid var(--line)}
+a.card{cursor:pointer;transition:transform .15s}
+a.card:hover{transform:translateY(-3px)}
+a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.r5{border-color:var(--gold1)}
+.r4{border-color:var(--violet1)}
+.photo{position:relative;aspect-ratio:1/1;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph{font-family:var(--serif);font-weight:800;font-size:64px;color:rgba(255,255,255,.35)}
+.stars{position:absolute;left:0;right:0;bottom:0;padding:4px 8px;font-size:15px;letter-spacing:3px;color:var(--gold1);text-shadow:0 1px 3px rgba(0,0,0,.8);background:linear-gradient(transparent,rgba(0,0,0,.6))}
+.r4 .stars{color:var(--violet1)}
+.name{padding:12px 12px 14px;font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:.1em;text-align:center}
+/* detail */
+.detail{max-width:760px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 20px) 20px 64px}
+.back{display:inline-flex;align-items:center;min-height:44px;color:var(--muted);text-decoration:none;font-size:15px}
+.back:hover{color:var(--ink)}
+.back:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.art{margin:8px 0 0;border:3px solid var(--gold1);border-radius:14px;overflow:hidden;background:#fff}
+.art img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+/* weapons */
+.wsec{margin-top:40px}
+.whead{display:flex;align-items:center;gap:14px;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid var(--gold2)}
+.wsec h3{font-family:var(--serif);font-weight:800;font-size:22px;letter-spacing:.1em;color:var(--gold1);margin:0}
+.gbtn{font:inherit;font-size:14px;font-weight:700;min-height:40px;padding:4px 16px;border-radius:999px;border:2px solid var(--gold2);background:transparent;color:var(--gold1);cursor:pointer}
+.gbtn[aria-pressed="true"]{background:var(--gold1);border-color:var(--gold1);color:#12152e}
+.gbtn:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.wref{padding:0 8px;text-align:center;font-size:12px;color:var(--muted)}
+.wgraph{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.grow{display:grid;grid-template-columns:44px minmax(84px,128px) 1fr 54px;gap:12px;align-items:center;animation:rise .4s calc(var(--i)*.08s) both}
+.gicon{width:44px;height:44px;border:2px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
+.gicon.r5{border-color:var(--gold1)}
+.gicon.r4{border-color:var(--violet1)}
+.gicon img{display:block;width:100%;height:100%;object-fit:contain}
+.glabel{line-height:1.3}
+.glabel b{display:block;font-family:var(--serif);font-weight:800;font-size:15px;letter-spacing:.04em}
+.glabel small{color:var(--muted);font-size:12px}
+.track{height:26px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden}
+.bar{height:100%;width:var(--w);border-radius:6px;background:#5b9bd5;transform-origin:left;animation:grow .85s calc(var(--i)*.08s + .1s) cubic-bezier(.2,.7,.2,1) both}
+.bar.top{background:var(--gold1)}
+.pct{text-align:right;font-weight:700;font-size:15px}
+.pct.top{color:var(--gold1)}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (prefers-reduced-motion:reduce){.grow,.bar{animation:none!important}}
+.wgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.wcard{position:relative;border:3px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.wcard.r5{border-color:var(--gold1)}
+.wcard.r4{border-color:var(--violet1)}
+.wimg{aspect-ratio:1/1;background:#fff}
+.wimg img{display:block;width:100%;height:100%;object-fit:contain}
+.rank{position:absolute;left:8px;top:8px;padding:1px 10px;border-radius:999px;background:rgba(18,21,46,.88);color:var(--gold1);font-size:13px;font-weight:700;letter-spacing:.04em}
+.wname{padding:10px 8px 2px;font-family:var(--serif);font-weight:800;font-size:16px;letter-spacing:.06em;text-align:center}
+.wstars{padding:0 8px 10px;text-align:center;font-size:13px;letter-spacing:3px;color:var(--gold1)}
+.wcard.r4 .wstars{color:var(--violet1)}
+.enter .wsec{animation:rise .55s .75s both}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+@keyframes zoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.art{overflow:hidden}
+.enter .back{animation:rise .4s both}
+.enter .art{animation:rise .65s .05s cubic-bezier(.2,.7,.2,1) both}
+.enter .art img{animation:zoom 1.1s .05s cubic-bezier(.2,.7,.2,1) both}
+.enter h2{animation:rise .55s .35s both}
+.enter .dstars{animation:rise .55s .45s both}
+.enter .info div:nth-child(1){animation:rise .55s .55s both}
+.enter .info div:nth-child(2){animation:rise .55s .65s both}
+.back-enter{animation:fade .4s both}
+@media (prefers-reduced-motion:reduce){.enter *,.back-enter{animation:none!important}}
+.detail h2{font-family:var(--serif);font-weight:800;font-size:clamp(28px,7vw,38px);letter-spacing:.1em;margin:28px 0 0;color:var(--gold1)}
+.dstars{font-size:18px;letter-spacing:4px;color:var(--gold1);margin-top:2px}
+.info{margin:22px 0 0;border-top:1px solid var(--gold2)}
+.info div{display:flex;gap:16px;padding:14px 4px;border-bottom:1px solid var(--line)}
+.info dt{flex:0 0 96px;color:var(--muted);font-size:15px}
+.info dd{margin:0;font-weight:700;font-size:17px}
+</style>
+</head>
+<body>
+<main class="wrap" id="listview">
+<header>
+  <h1>어떤 캐릭터를 육성하고 싶으세요?</h1>
+  <p>캐릭터 목록입니다.</p>
+</header>
+<ul class="grid" id="grid"></ul>
+</main>
+
+<main class="detail" id="detailview" hidden>
+  <a class="back" href="#">← 캐릭터 목록</a>
+  <figure class="art"><img id="dart" alt=""></figure>
+  <h2 id="dname"></h2>
+  <div class="dstars" id="dstars" role="img"></div>
+  <dl class="info" id="dinfo"></dl>
+  <section class="wsec" id="wsec"><div class="whead"><h3>추천 무기</h3><button type="button" class="gbtn" id="gbtn" aria-pressed="false">그래프</button></div><ol class="wgrid" id="wgrid"></ol><ol class="wgraph" id="wgraph" hidden></ol></section>
+</main>
+
+<script>
+(function(){
+  var C=[
+    {id:"anastasia",n:"아나스타샤",s:5,photo:"img/anastasia.webp",
+     art:"img/art.webp",
+     info:[["신의 심장","얼음"],["무기","활"]],
+     weapons:[{n:"미정",s:5,r:1,p:100,img:"img/w0.webp"},{n:"옥빛 장궁",s:4,r:5,p:90.1,img:"img/w1.webp"},{n:"최초의 대마술",s:5,r:1,p:89.2,img:"img/w2.webp"},{n:"비뢰의 고동",s:5,r:1,p:86.8,img:"img/w3.webp"},{n:"천공의 날개",s:5,r:1,p:85.7,img:"img/w4.webp"}]},
+    {id:null,n:"다니카",s:5,photo:"img/danika.webp"}
+  ];
+  var g=document.getElementById("grid"),lv=document.getElementById("listview"),dv=document.getElementById("detailview");
+  function stars(n){return new Array(n+1).join("★")}
+  C.forEach(function(c){
+    var li=document.createElement("li"),el=document.createElement(c.id?"a":"div");
+    el.className="card r"+c.s;
+    if(c.id){el.href="#"+c.id;el.setAttribute("aria-label",c.n+" 상세 보기")}
+    var img=c.photo?"<img src='"+c.photo+"' alt='"+c.n+"' draggable='false'>":"<span class='ph' aria-hidden='true'>"+c.n.charAt(0)+"</span>";
+    el.innerHTML="<div class='photo'>"+img+"<div class='stars' role='img' aria-label='"+c.s+"성'>"+stars(c.s)+"</div></div><div class='name'>"+c.n+"</div>";
+    li.appendChild(el);g.appendChild(li);
+  });
+  var cur=null,gmode=false;
+  function setMode(on){
+    gmode=on;
+    var b=document.getElementById("gbtn"),gr=document.getElementById("wgrid"),gg=document.getElementById("wgraph");
+    b.setAttribute("aria-pressed",on?"true":"false");
+    gr.hidden=on;gg.hidden=!on;
+    if(on&&cur){
+      var ws=cur.weapons,mx=Math.max.apply(null,ws.map(function(w){return w.p}));
+      gg.innerHTML=ws.map(function(w,i){
+        var top=w.p===mx?" top":"";
+        return "<li class='grow' style='--i:"+i+"'><div class='gicon r"+w.s+"'><img src='"+w.img+"' alt='' draggable='false'></div><div class='glabel'><b>"+w.n+"</b><small>"+w.r+"재련</small></div><div class='track'><div class='bar"+top+"' style='--w:"+w.p+"%'></div></div><div class='pct"+top+"'>"+w.p+"%</div></li>";
+      }).join("");
+    }
+  }
+  document.getElementById("gbtn").addEventListener("click",function(){setMode(!gmode)});
+  function show(){
+    var id=(location.hash||"").slice(1),c=C.filter(function(x){return x.id&&x.id===id&&x.art})[0];
+    if(c){
+      var im=document.getElementById("dart");im.src=c.art;im.alt=c.n+" 일러스트";
+      document.getElementById("dname").textContent=c.n;
+      var ds=document.getElementById("dstars");ds.textContent=stars(c.s);ds.setAttribute("aria-label",c.s+"성");
+      document.getElementById("dinfo").innerHTML=c.info.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
+      document.getElementById("wgrid").innerHTML=(c.weapons||[]).map(function(w,i){return "<li class='wcard r"+w.s+"'><span class='rank'>"+(i+1)+"순위</span><div class='wimg'><img src='"+w.img+"' alt='"+w.n+"' draggable='false'></div><div class='wname'>"+w.n+"</div><div class='wref'>"+w.r+"재련</div><div class='wstars' role='img' aria-label='"+w.s+"성'>"+stars(w.s)+"</div></li>"}).join("");
+      document.getElementById("wsec").hidden=!(c.weapons&&c.weapons.length);
+      cur=c;setMode(false);
+      lv.hidden=true;dv.hidden=false;document.title=c.n+" – 원신 캐릭터 육성 가이드";
+      dv.classList.remove("enter");void dv.offsetWidth;dv.classList.add("enter");
+    }else{
+      dv.hidden=true;lv.hidden=false;document.title="원신 캐릭터 육성 가이드";
+      lv.classList.remove("back-enter");void lv.offsetWidth;lv.classList.add("back-enter");
+    }
+    window.scrollTo(0,0);
+  }
+  window.addEventListener("hashchange",show);
+  show();
+})();
+</script>
+</body>
+</html>
