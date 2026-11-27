@@ -52,7 +52,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 .back:hover{color:var(--ink)}
 .back:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 .art{margin:8px 0 0;border:3px solid var(--gold1);border-radius:14px;overflow:hidden;background:#fff}
-.art img{display:block;width:100%;height:auto}
+.art img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
 /* weapons */
 .wsec{margin-top:40px}
 .whead{display:flex;align-items:center;gap:14px;margin:0 0 16px;padding-bottom:12px;border-bottom:1px solid var(--gold2)}
@@ -131,7 +131,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 (function(){
   var C=[
     {id:"anastasia",n:"아나스타샤",s:5,photo:"img/anastasia.webp",
-     art:"img/art.webp",
+     art:"img/art.webp",artPos:"50% 15%",
      info:[["신의 심장","얼음"],["무기","활"]],
      weapons:[{n:"미정",s:5,r:1,p:100,img:"img/w0.webp"},{n:"옥빛 장궁",s:4,r:5,p:90.1,img:"img/w1.webp"},{n:"최초의 대마술",s:5,r:1,p:89.2,img:"img/w2.webp"},{n:"비뢰의 고동",s:5,r:1,p:86.8,img:"img/w3.webp"},{n:"천공의 날개",s:5,r:1,p:85.7,img:"img/w4.webp"}]},
     {id:null,n:"다니카",s:5,photo:"img/danika.webp"}
@@ -164,7 +164,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
   function show(){
     var id=(location.hash||"").slice(1),c=C.filter(function(x){return x.id&&x.id===id&&x.art})[0];
     if(c){
-      var im=document.getElementById("dart");im.src=c.art;im.alt=c.n+" 일러스트";
+      var im=document.getElementById("dart");im.src=c.art;im.alt=c.n+" 일러스트";im.style.objectPosition=c.artPos||"";
       document.getElementById("dname").textContent=c.n;
       var ds=document.getElementById("dstars");ds.textContent=stars(c.s);ds.setAttribute("aria-label",c.s+"성");
       document.getElementById("dinfo").innerHTML=c.info.map(function(r){return "<div><dt>"+r[0]+"</dt><dd>"+r[1]+"</dd></div>"}).join("");
