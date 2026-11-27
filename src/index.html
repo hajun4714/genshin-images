@@ -121,6 +121,52 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
 .mval{margin-top:4px;font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:.04em;color:var(--gold1);word-break:keep-all}
 @media (max-width:420px){.mlist{gap:8px}.mcard{padding:12px 6px}.mimg{width:72px}.mval{font-size:15px}}
 .enter .msec{animation:rise .55s .95s both}
+/* stat targets */
+.ssec{margin-top:40px}
+.slist{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.scard{padding:14px 12px;border:2px solid var(--line);border-radius:12px;background:var(--surface);text-align:center}
+.sname{font-size:14px;font-weight:700;color:var(--ink);letter-spacing:.04em}
+.srow{display:flex;justify-content:space-between;align-items:baseline;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--line)}
+.srow span{font-size:12px;color:var(--muted)}
+.srow b{font-family:var(--serif);font-weight:800;font-size:17px;color:var(--ink)}
+.srow.rec b{color:var(--gold1)}
+.note{margin:12px 2px 0;font-size:13px;color:var(--muted);line-height:1.6;word-break:keep-all}
+@media (max-width:620px){.slist{grid-template-columns:repeat(2,1fr);gap:10px}}
+/* talents */
+.tsec{margin-top:40px}
+.tlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.tcard{display:grid;grid-template-columns:56px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.tcard.top{border-color:var(--gold1)}
+.ticon{width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#4a3f86,#241f4b);border:2px solid var(--violet2);display:flex;align-items:center;justify-content:center}
+.ticon img{width:80%;height:80%;object-fit:contain}
+.ttype{font-size:12px;font-weight:700;color:var(--violet1);letter-spacing:.04em}
+.tname{font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:.04em;margin:1px 0 2px}
+.tdesc{font-size:14px;line-height:1.65;color:var(--muted);word-break:keep-all}
+.tpri{align-self:start;padding:2px 12px;border-radius:999px;background:rgba(18,21,46,.88);border:1px solid var(--gold2);color:var(--gold1);font-size:13px;font-weight:700;white-space:nowrap}
+.tsub{margin:22px 0 10px;font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:.08em;color:var(--ink)}
+.plist .tcard{grid-template-columns:48px minmax(0,1fr)}
+.plist .ticon{width:48px;height:48px}
+@media (max-width:420px){.tcard{grid-template-columns:44px minmax(0,1fr) auto;gap:10px;padding:12px}.ticon,.plist .ticon{width:44px;height:44px}.plist .tcard{grid-template-columns:44px minmax(0,1fr)}.tpri{padding:2px 8px;font-size:12px}}
+/* teams */
+.psec{margin-top:40px}
+.plist2{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:14px}
+.pcard{padding:14px;border:2px solid var(--line);border-radius:12px;background:var(--surface)}
+.pcard.top{border-color:var(--gold1)}
+.phead{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pname{font-family:var(--serif);font-weight:800;font-size:18px;letter-spacing:.04em}
+.ptag{padding:1px 10px;border-radius:999px;border:1px solid var(--violet1);color:var(--violet1);font-size:12px;font-weight:700}
+.pmem{list-style:none;margin:12px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.pmem li{text-align:center}
+.pava{aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:linear-gradient(160deg,#6a4b2c,#a8731a);border:2px solid var(--line)}
+.pava.r4{background:linear-gradient(160deg,#4a3a7a,#8a63c8)}
+.pava img{display:block;width:100%;height:100%;object-fit:cover}
+.pava.me{border-color:var(--gold1)}
+.pmem small{display:block;margin-top:4px;font-size:13px;font-weight:700;color:var(--ink)}
+.pmem em{display:block;font-style:normal;font-size:11px;color:var(--muted)}
+.pdesc{margin:10px 0 0;font-size:14px;line-height:1.65;color:var(--muted);word-break:keep-all}
+.enter .ssec{animation:rise .55s 1.05s both}
+.enter .tsec{animation:rise .55s 1.15s both}
+.enter .psec{animation:rise .55s 1.25s both}
 @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
 @keyframes zoom{from{transform:scale(1.08)}to{transform:scale(1)}}
 @keyframes fade{from{opacity:0}to{opacity:1}}
@@ -160,6 +206,9 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
   <section class="wsec" id="wsec"><div class="whead"><h3>추천 무기</h3><button type="button" class="gbtn" id="gbtn" aria-pressed="false">그래프</button></div><ol class="wgrid" id="wgrid"></ol><ol class="wgraph" id="wgraph" hidden></ol></section>
   <section class="wsec asec" id="asec"><div class="whead"><h3>추천 성유물</h3></div><ol class="alist" id="alist"></ol></section>
   <section class="wsec msec" id="msec"><div class="whead"><h3>주옵션</h3></div><ul class="mlist" id="mlist"></ul></section>
+  <section class="wsec ssec" id="ssec"><div class="whead"><h3>권장 스펙</h3></div><ul class="slist" id="slist"></ul><p class="note" id="snote"></p></section>
+  <section class="wsec tsec" id="tsec"><div class="whead"><h3>특성</h3></div><ol class="tlist" id="tlist"></ol><p class="note" id="tnote"></p><div id="pwrap"><h4 class="tsub">고유 특성</h4><ul class="tlist plist" id="plist"></ul></div></section>
+  <section class="wsec psec" id="psec"><div class="whead"><h3>파티 편성</h3></div><ol class="plist2" id="tmlist"></ol></section>
 </main>
 
 <script>
@@ -179,7 +228,25 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
      artifacts:[{n:"그림자 속 산산조각 난 꿈",s:5,p:100,img:"img/mi_a0.webp",sets:[["2세트","공격력+18%"],["4세트","초전도 반응으로 주는 피해가 80% 증가하고, 별 초전도 반응으로 주는 피해가 40% 증가한다. 장착 캐릭터가 초전도 또는 별 초전도 반응의 영향을 받은 적 공격 시, 해당 공격의 치명타 확률이 16% 증가한다"]]},
                 {n:"원소 마스터리 2세트 + 2세트",s:5,p:100,img:"img/mi_a2.webp",sets:[["2세트 + 2세트","원소 마스터리+160pt (원소 마스터리+80pt 효과가 있는 세트 2종을 2세트씩 장착)"],["조합 가능한 세트","대지를 유랑하는 악단 · 잃어버린 낙원의 꽃 · 도금된 꿈 중 2종"]]},
                 {n:"도금된 꿈",s:5,p:99,img:"img/mi_a1.webp",sets:[["2세트","원소 마스터리+80pt"],["4세트","원소 반응 발동 후 8초 동안 파티 내 다른 캐릭터의 원소 타입에 따라 장착 캐릭터가 강화 효과를 받는다: 파티 내 장착 캐릭터와 동일한 원소 타입의 캐릭터가 1명 존재할 때마다 공격력이 14% 증가한다. 파티 내 장착 캐릭터와 다른 원소 타입의 캐릭터가 1명 존재할 때마다 원소 마스터리가 50pt 증가한다. 해당 효과는 각각 최대 3명의 캐릭터까지 계산한다. 해당 효과는 8초마다 최대 1회 발동된다. 장착 캐릭터가 대기 상태일 때도 해당 효과는 발동된다"]]}],
-     mains:[["시계","원소 마스터리","img/mi_m0.webp"],["성배","원소 마스터리","img/mi_m1.webp"],["왕관","치명타 확률/피해%","img/mi_m2.webp"]]}
+     mains:[["시계","원소 마스터리","img/mi_m0.webp"],["성배","원소 마스터리","img/mi_m1.webp"],["왕관","치명타 확률/피해%","img/mi_m2.webp"]],
+     stats:[["원소 마스터리","400","600 이상"],["치명타 확률","60%","70%"],["치명타 피해","150%","200%"],["원소 충전 효율","130%","150%"]],
+     statNote:"필드 위에서 직접 딜을 넣는 메인 딜러 기준입니다. 1돌파(별자리 1단계) 이상이면 원소 충전 효율은 100%로도 충분합니다. 부옵션 우선순위: 치명타 피해 ≥ 치명타 확률 ≥ 원소 마스터리 > 원소 충전 효율",
+     talents:[
+       {pri:1,type:"일반 공격",n:"연쇄 반응",img:"img/mi_t0.webp",d:"융합 비콘을 소모하는 특수 강공격 「융합 폭발」이 별 초전도 피해로 간주되어 미탸의 핵심 딜이 나옵니다."},
+       {pri:2,type:"원소폭발",n:"해석·융합의 이치",img:"img/mi_t2.webp",d:"범위 번개 원소 피해와 함께 융합 비콘 3개를 바로 생성해 강공격 딜을 이어 줍니다."},
+       {pri:3,type:"원소전투 스킬",n:"법칙·변수 탐지",img:"img/mi_t1.webp",d:"탐지 융합로를 설치합니다. 짧게 터치하면 「안정」·「과열」 상태를 전환할 수 있습니다."}],
+     talentNote:"메인 딜러 기준 순서입니다. 미탸를 대기 상태(서브 딜러)로 쓰는 파티에서는 원소전투 스킬을 가장 먼저 올리세요.",
+     passives:[
+       {n:"내압 테스트",img:"img/mi_p0.webp",d:"안정: 융합 비콘 1개당 파티 원소 마스터리 +30pt. 과열: 별 초전도 후 1.5초마다 융합 비콘 획득."},
+       {n:"불안정한 시약",img:"img/mi_p1.webp",d:"융합 비콘 지속 시간 10초. 비콘 생성 시 치명타 확률 +5% (최대 4스택, 20%)."},
+       {n:"별빛 축복·기밀 협약",img:"img/mi_p2.webp",d:"초전도가 별 초전도로 바뀌고, 미탸의 원소 마스터리에 비례해 파티의 별 초전도 기본 피해가 최대 14% 증가합니다."}],
+     teams:[
+       {n:"미탸 메인 딜",tag:"추천",d:"미탸가 필드에서 강공격으로 별 초전도 딜을 넣고, 오데트가 얼음 부착, 야에 미코·발레리가 번개 서브 딜을 맡습니다.",
+        m:[["미탸","img/mitya.webp",5,"메인 딜"],["오데트","img/c_odette.webp",5,"얼음 서포터"],["야에 미코","img/c_yae.webp",5,"서브 딜"],["발레리","img/c_valeriy.webp",4,"서브 딜"]]},
+       {n:"산드로네 별 초전도",tag:"최상위",d:"산드로네가 필드 메인 딜을 맡고, 미탸는 대기 상태에서 별 초전도 피해와 원소 마스터리 버프를 줍니다.",
+        m:[["산드로네","img/c_sandrone.webp",5,"메인 딜"],["미탸","img/mitya.webp",5,"서브 딜"],["오데트","img/c_odette.webp",5,"얼음 서포터"],["야에 미코","img/c_yae.webp",5,"서브 딜"]]},
+       {n:"무과금 파티",tag:"입문",d:"4성과 여행자만으로 꾸리는 파티입니다. 설탕이 원소 마스터리를, 얼음 여행자가 얼음 부착을 맡습니다.",
+        m:[["미탸","img/mitya.webp",5,"메인 딜"],["발레리","img/c_valeriy.webp",4,"서브 딜"],["설탕","img/c_sucrose.webp",4,"원소 마스터리"],["여행자(얼음)","img/c_traveler.webp",5,"얼음 부착"]]}]}
   ];
   var g=document.getElementById("grid"),lv=document.getElementById("listview"),dv=document.getElementById("detailview");
   var tm,toast=document.createElement("div");toast.className="toast";toast.setAttribute("role","status");toast.setAttribute("aria-live","polite");document.body.appendChild(toast);
@@ -224,6 +291,16 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
       document.getElementById("asec").hidden=!(c.artifacts&&c.artifacts.length);
       document.getElementById("mlist").innerHTML=(c.mains||[]).map(function(m){return "<li class='mcard'>"+(m[2]?"<div class='mimg'><img src='"+m[2]+"' alt='' draggable='false'></div>":"")+"<div class='mslot'>"+m[0]+"</div><div class='mval'>"+m[1]+"</div></li>"}).join("");
       document.getElementById("msec").hidden=!(c.mains&&c.mains.length);
+      document.getElementById("slist").innerHTML=(c.stats||[]).map(function(x){return "<li class='scard'><div class='sname'>"+x[0]+"</div><div class='srow'><span>최소</span><b>"+x[1]+"</b></div><div class='srow rec'><span>권장</span><b>"+x[2]+"</b></div></li>"}).join("");
+      document.getElementById("snote").textContent=c.statNote||"";document.getElementById("snote").hidden=!c.statNote;
+      document.getElementById("ssec").hidden=!(c.stats&&c.stats.length);
+      document.getElementById("tlist").innerHTML=(c.talents||[]).map(function(t){return "<li class='tcard"+(t.pri===1?" top":"")+"'><div class='ticon'><img src='"+t.img+"' alt='' draggable='false'></div><div><div class='ttype'>"+t.type+"</div><div class='tname'>"+t.n+"</div><div class='tdesc'>"+t.d+"</div></div><span class='tpri'>"+t.pri+"순위</span></li>"}).join("");
+      document.getElementById("tnote").textContent=c.talentNote||"";document.getElementById("tnote").hidden=!c.talentNote;
+      document.getElementById("plist").innerHTML=(c.passives||[]).map(function(t){return "<li class='tcard'><div class='ticon'><img src='"+t.img+"' alt='' draggable='false'></div><div><div class='tname'>"+t.n+"</div><div class='tdesc'>"+t.d+"</div></div></li>"}).join("");
+      document.getElementById("pwrap").hidden=!(c.passives&&c.passives.length);
+      document.getElementById("tsec").hidden=!(c.talents&&c.talents.length);
+      document.getElementById("tmlist").innerHTML=(c.teams||[]).map(function(t,i){return "<li class='pcard"+(i===0?" top":"")+"'><div class='phead'><span class='rank' style='position:static'>"+(i+1)+"순위</span><span class='pname'>"+t.n+"</span>"+(t.tag?"<span class='ptag'>"+t.tag+"</span>":"")+"</div><ul class='pmem'>"+t.m.map(function(x){return "<li><div class='pava r"+x[2]+(x[0]===c.n?" me":"")+"'><img src='"+x[1]+"' alt='' draggable='false'></div><small>"+x[0]+"</small><em>"+x[3]+"</em></li>"}).join("")+"</ul><p class='pdesc'>"+t.d+"</p></li>"}).join("");
+      document.getElementById("psec").hidden=!(c.teams&&c.teams.length);
       cur=c;setMode(true);
       lv.hidden=true;dv.hidden=false;document.title=c.n+" – 원신 캐릭터 육성 가이드";
       dv.classList.remove("enter");void dv.offsetWidth;dv.classList.add("enter");
