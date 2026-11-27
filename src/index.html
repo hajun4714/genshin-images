@@ -35,9 +35,12 @@ header p{color:var(--muted);margin:14px 0 0;letter-spacing:.08em;font-size:14px}
 header p::before{content:"";display:block;width:48px;height:2px;background:var(--gold2);margin-bottom:14px}
 .grid{list-style:none;margin:0;padding:0 0 56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
 .card{display:block;color:inherit;text-decoration:none;border-radius:12px;overflow:hidden;background:var(--surface);border:3px solid var(--line)}
-a.card{cursor:pointer;transition:transform .15s}
-a.card:hover{transform:translateY(-3px)}
-a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+button.card{width:100%;padding:0;font:inherit;text-align:inherit;-webkit-appearance:none;appearance:none}
+a.card,button.card{cursor:pointer;transition:transform .15s}
+a.card:hover,button.card:hover{transform:translateY(-3px)}
+a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.toast{position:fixed;left:50%;top:50%;z-index:20;transform:translate(-50%,-50%);padding:16px 30px;border:2px solid var(--gold1);border-radius:14px;background:rgba(27,31,63,.96);color:var(--gold1);font-family:var(--serif);font-weight:800;font-size:18px;letter-spacing:.08em;box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
 .r5{border-color:var(--gold1)}
 .r4{border-color:var(--violet1)}
 .photo{position:relative;aspect-ratio:1/1;background:var(--bg);display:flex;align-items:center;justify-content:center;overflow:hidden}
@@ -158,7 +161,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
 <script>
 (function(){
   var C=[
-    {id:"anastasia",n:"아나스타샤",s:5,photo:"img/anastasia.webp",
+    {id:"anastasia",n:"아나스타샤",s:5,ready:false,photo:"img/anastasia.webp",
      art:"img/art.webp",artPos:"50% 15%",
      info:[["신의 심장","얼음"],["무기","활"]],
      weapons:[{n:"미정",s:5,r:1,p:100,img:"img/w0.webp"},{n:"옥빛 장궁",s:4,r:5,p:90.1,img:"img/w1.webp"},{n:"최초의 대마술",s:5,r:1,p:89.2,img:"img/w2.webp"},{n:"비뢰의 고동",s:5,r:1,p:86.8,img:"img/w3.webp"},{n:"천공의 날개",s:5,r:1,p:85.7,img:"img/w4.webp"},{n:"극지의 별",s:5,r:1,p:82.8,img:"img/w5.webp"},{n:"약수",s:5,r:1,p:82.2,img:"img/w6.webp"},{n:"옥빛 장궁",s:4,r:1,p:80.6,img:"img/w7.webp"}],
@@ -167,11 +170,15 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
     {id:null,n:"다니카",s:5,photo:"img/danika.webp"}
   ];
   var g=document.getElementById("grid"),lv=document.getElementById("listview"),dv=document.getElementById("detailview");
+  var tm,toast=document.createElement("div");toast.className="toast";toast.setAttribute("role","status");toast.setAttribute("aria-live","polite");document.body.appendChild(toast);
+  function soon(){toast.textContent="준비 중입니다";toast.classList.add("on");clearTimeout(tm);tm=setTimeout(function(){toast.classList.remove("on")},1600)}
   function stars(n){return new Array(n+1).join("★")}
   C.forEach(function(c){
-    var li=document.createElement("li"),el=document.createElement(c.id?"a":"div");
+    var open=c.id&&c.ready!==false;
+    var li=document.createElement("li"),el=document.createElement(open?"a":"button");
     el.className="card r"+c.s;
-    if(c.id){el.href="#"+c.id;el.setAttribute("aria-label",c.n+" 상세 보기")}
+    if(open){el.href="#"+c.id;el.setAttribute("aria-label",c.n+" 상세 보기")}
+    else{el.type="button";el.setAttribute("aria-label",c.n+" – 준비 중");el.addEventListener("click",soon)}
     var img=c.photo?"<img src='"+c.photo+"' alt='"+c.n+"' draggable='false'>":"<span class='ph' aria-hidden='true'>"+c.n.charAt(0)+"</span>";
     el.innerHTML="<div class='photo'>"+img+"<div class='stars' role='img' aria-label='"+c.s+"성'>"+stars(c.s)+"</div></div><div class='name'>"+c.n+"</div>";
     li.appendChild(el);g.appendChild(li);
@@ -192,7 +199,7 @@ a.card:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
   }
   document.getElementById("gbtn").addEventListener("click",function(){setMode(!gmode)});
   function show(){
-    var id=(location.hash||"").slice(1),c=C.filter(function(x){return x.id&&x.id===id&&x.art})[0];
+    var id=(location.hash||"").slice(1),c=C.filter(function(x){return x.id&&x.id===id&&x.art&&x.ready!==false})[0];
     if(c){
       var im=document.getElementById("dart");im.src=c.art;im.alt=c.n+" 일러스트";im.style.objectPosition=c.artPos||"";
       document.getElementById("dname").textContent=c.n;
