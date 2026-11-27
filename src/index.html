@@ -144,6 +144,7 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
 .tdesc{font-size:14px;line-height:1.65;color:var(--muted);word-break:keep-all}
 .tpri{align-self:start;padding:2px 12px;border-radius:999px;background:rgba(18,21,46,.88);border:1px solid var(--gold2);color:var(--gold1);font-size:13px;font-weight:700;white-space:nowrap}
 .tsub{margin:22px 0 10px;font-family:var(--serif);font-weight:800;font-size:17px;letter-spacing:.08em;color:var(--ink)}
+.plist{margin-top:12px}
 .plist .tcard{grid-template-columns:48px minmax(0,1fr)}
 .plist .ticon{width:48px;height:48px}
 @media (max-width:420px){.tcard{grid-template-columns:44px minmax(0,1fr) auto;gap:10px;padding:12px}.ticon,.plist .ticon{width:44px;height:44px}.plist .tcard{grid-template-columns:44px minmax(0,1fr)}.tpri{padding:2px 8px;font-size:12px}}
@@ -212,7 +213,7 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
   <section class="wsec asec" id="asec"><div class="whead"><h3>추천 성유물</h3></div><ol class="alist" id="alist"></ol></section>
   <section class="wsec msec" id="msec"><div class="whead"><h3>주옵션</h3></div><ul class="mlist" id="mlist"></ul></section>
   <section class="wsec ssec" id="ssec"><div class="whead"><h3>권장 스펙</h3></div><ul class="slist" id="slist"></ul><p class="note" id="snote"></p></section>
-  <section class="wsec tsec" id="tsec"><div class="whead"><h3>특성</h3></div><ol class="tlist" id="tlist"></ol><p class="note" id="tnote"></p><div id="pwrap"><h4 class="tsub">고유 특성</h4><ul class="tlist plist" id="plist"></ul></div></section>
+  <section class="wsec tsec" id="tsec"><div class="whead"><h3>특성</h3></div><ol class="tlist" id="tlist"></ol><p class="note" id="tnote"></p><div id="pwrap"><button type="button" class="wmore" id="pmore" aria-expanded="false" aria-controls="plist"></button><ul class="tlist plist" id="plist" hidden></ul></div></section>
   <section class="wsec psec" id="psec"><div class="whead"><h3>파티 편성</h3></div><ol class="plist2" id="tmlist"></ol></section>
 </main>
 
@@ -282,6 +283,11 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
     }
   }
   document.getElementById("gbtn").addEventListener("click",function(){setMode(!gmode)});
+  function setPassive(open){
+    var b=document.getElementById("pmore");document.getElementById("plist").hidden=!open;
+    b.setAttribute("aria-expanded",open?"true":"false");b.textContent=open?"고유 특성 접기 ▴":"고유 특성 보기 ▾";
+  }
+  document.getElementById("pmore").addEventListener("click",function(){setPassive(document.getElementById("plist").hidden)});
   var FOLD=5;
   function setFold(on){
     var sec=document.getElementById("wsec"),b=document.getElementById("wmore"),n=(cur&&cur.weapons||[]).length;
@@ -312,7 +318,7 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
       document.getElementById("tlist").innerHTML=(c.talents||[]).map(function(t){return "<li class='tcard"+(t.pri===1?" top":"")+"'><div class='ticon'><img src='"+t.img+"' alt='' draggable='false'></div><div><div class='ttype'>"+t.type+"</div><div class='tname'>"+t.n+"</div><div class='tdesc'>"+t.d+"</div></div><span class='tpri'>"+t.pri+"순위</span></li>"}).join("");
       document.getElementById("tnote").textContent=c.talentNote||"";document.getElementById("tnote").hidden=!c.talentNote;
       document.getElementById("plist").innerHTML=(c.passives||[]).map(function(t){return "<li class='tcard'><div class='ticon'><img src='"+t.img+"' alt='' draggable='false'></div><div><div class='tname'>"+t.n+"</div><div class='tdesc'>"+t.d+"</div></div></li>"}).join("");
-      document.getElementById("pwrap").hidden=!(c.passives&&c.passives.length);
+      document.getElementById("pwrap").hidden=!(c.passives&&c.passives.length);setPassive(false);
       document.getElementById("tsec").hidden=!(c.talents&&c.talents.length);
       document.getElementById("tmlist").innerHTML=(c.teams||[]).map(function(t,i){return "<li class='pcard"+(i===0?" top":"")+"'><div class='phead'><span class='rank' style='position:static'>"+(i+1)+"순위</span><span class='pname'>"+t.n+"</span>"+(t.tag?"<span class='ptag'>"+t.tag+"</span>":"")+"</div><ul class='pmem'>"+t.m.map(function(x){return "<li><div class='pava r"+x[2]+(x[0]===c.n?" me":"")+"'><img src='"+x[1]+"' alt='' draggable='false'></div><small>"+x[0]+"</small><em>"+x[3]+"</em></li>"}).join("")+"</ul><p class='pdesc'>"+t.d+"</p></li>"}).join("");
       document.getElementById("psec").hidden=!(c.teams&&c.teams.length);
