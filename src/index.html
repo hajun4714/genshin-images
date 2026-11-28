@@ -73,7 +73,12 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
 .glabel{line-height:1.3}
 .glabel b{display:block;font-family:var(--serif);font-weight:800;font-size:15px;letter-spacing:.04em}
 .glabel small{color:var(--muted);font-size:12px}
-.track{height:26px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden}
+.track{position:relative;height:26px;border-radius:6px;background:rgba(255,255,255,.07);overflow:hidden}
+.track .bar{position:relative;z-index:1}
+.bar2{position:absolute;left:0;top:0;height:100%;width:var(--w);border-radius:6px;background:#fbeeb8;transform-origin:left;animation:grow .85s calc(var(--i)*.08s + .1s) cubic-bezier(.2,.7,.2,1) both}
+.pct small{display:block;font-size:11px;font-weight:700;color:#fbeeb8;line-height:1.1}
+.wnote{margin:12px 2px 0;font-size:13px;color:var(--muted);line-height:1.6;word-break:keep-all}
+.wnote i{display:inline-block;width:12px;height:12px;border-radius:3px;background:#fbeeb8;vertical-align:-1px;margin-right:6px}
 .bar{height:100%;width:var(--w);border-radius:6px;background:#5b9bd5;transform-origin:left;animation:grow .85s calc(var(--i)*.08s + .1s) cubic-bezier(.2,.7,.2,1) both}
 .bar.top{background:var(--gold1)}
 .pct{text-align:right;font-weight:700;font-size:15px}
@@ -209,7 +214,7 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
   <h2 id="dname"></h2>
   <div class="dstars" id="dstars" role="img"></div>
   <dl class="info" id="dinfo"></dl>
-  <section class="wsec" id="wsec"><div class="whead"><h3>추천 무기</h3><button type="button" class="gbtn" id="gbtn" aria-pressed="false">그래프</button></div><ol class="wgrid" id="wgrid"></ol><ol class="wgraph" id="wgraph" hidden></ol><button type="button" class="wmore" id="wmore" aria-expanded="false" hidden></button></section>
+  <section class="wsec" id="wsec"><div class="whead"><h3>추천 무기</h3><button type="button" class="gbtn" id="gbtn" aria-pressed="false">그래프</button></div><ol class="wgrid" id="wgrid"></ol><ol class="wgraph" id="wgraph" hidden></ol><p class="wnote" id="wnote" hidden></p><button type="button" class="wmore" id="wmore" aria-expanded="false" hidden></button></section>
   <section class="wsec asec" id="asec"><div class="whead"><h3>추천 성유물</h3></div><ol class="alist" id="alist"></ol></section>
   <section class="wsec msec" id="msec"><div class="whead"><h3>주옵션</h3></div><ul class="mlist" id="mlist"></ul></section>
   <section class="wsec ssec" id="ssec"><div class="whead"><h3>권장 스펙</h3></div><ul class="slist" id="slist"></ul><p class="note" id="snote"></p></section>
@@ -316,7 +321,8 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
     {id:"odette",n:"오데트",s:5,photo:"img/odette.webp",
      art:"img/odette_art.webp",
      info:[["신의 심장","얼음"],["무기","한손검"]],
-     weapons:[{n:"백조의 호수",s:5,r:1,p:100,img:"img/we_sword_swanlake.webp"},{n:"반암결록",s:5,r:1,p:87,img:"img/we_sword_morax.webp"},{n:"창백한 섬광",s:5,r:1,p:84,img:"img/we_sword_outersword.webp"},{n:"사면",s:5,r:1,p:84,img:"img/we_sword_estoc.webp"},{n:"잎을 가르는 빛",s:5,r:1,p:79,img:"img/we_sword_ayus.webp"},{n:"하란 월백의 후츠",s:5,r:1,p:79,img:"img/we_sword_amenoma.webp"},{n:"안개를 가르는 회광",s:5,r:1,p:78,img:"img/we_sword_narukami.webp"},{n:"별빛검",s:5,r:1,p:78,img:"img/we_sword_weaponquestsnezhnaya.webp"}],
+     weaponNote:"연한 노란색 막대는 개인 DPS 기준입니다. 반암결록은 파티 DPS에서 차이가 나서 순위가 낮지만, 개인 DPS는 전용 무기와 큰 차이가 없습니다.",
+     weapons:[{n:"백조의 호수",s:5,r:1,p:100,img:"img/we_sword_swanlake.webp"},{n:"반암결록",s:5,r:1,p:87,p2:98,img:"img/we_sword_morax.webp"},{n:"창백한 섬광",s:5,r:1,p:84,img:"img/we_sword_outersword.webp"},{n:"사면",s:5,r:1,p:84,img:"img/we_sword_estoc.webp"},{n:"잎을 가르는 빛",s:5,r:1,p:79,img:"img/we_sword_ayus.webp"},{n:"하란 월백의 후츠",s:5,r:1,p:79,img:"img/we_sword_amenoma.webp"},{n:"안개를 가르는 회광",s:5,r:1,p:78,img:"img/we_sword_narukami.webp"},{n:"별빛검",s:5,r:1,p:78,img:"img/we_sword_weaponquestsnezhnaya.webp"}],
      artifacts:[{n:"용광로가 빚은 심장",s:5,img:"img/rs_15048_4.webp",sets:[["2세트","공격력+18%"],["4세트","장착 캐릭터가 별빛 반응을 발동하거나 별빛 반응 피해를 준 후 12초 동안 공격력이 12% 증가하고, 주변에 있는 파티 내 모든 캐릭터가 주는 별빛 반응 피해가 50% 증가한다. 장착 캐릭터가 대기 상태일 때도 상술한 효과가 발동된다. 동명의 성유물 세트가 생성한 피해 보너스 효과는 중첩되지 않는다"]]},{n:"공격력 2세트 + 2세트",s:5,img:"img/od_atk22.webp",sets:[["2세트 + 2세트","공격력+36% (공격력+18% 효과가 있는 세트 2종을 2세트씩 장착)"],["조합 예시","검투사의 피날레 · 추억의 시메나와 · 진사 왕생록 등 중 2종"]]}],
      mains:[["시계","공격력% / 원소 마스터리","img/rs_15048_5.webp"],["성배","공격력%","img/rs_15048_1.webp"],["왕관","치명타 확률/피해%","img/rs_15048_3.webp"]],
      stats:[["공격력","2000","3000"],["치명타 확률","60%","70%"],["치명타 피해","150%","200%"]],
@@ -358,11 +364,12 @@ a.card:focus-visible,button.card:focus-visible{outline:3px solid var(--ink);outl
     var b=document.getElementById("gbtn"),gr=document.getElementById("wgrid"),gg=document.getElementById("wgraph");
     b.setAttribute("aria-pressed",on?"true":"false");
     gr.hidden=on;gg.hidden=!on;
+    var wn=document.getElementById("wnote"),nt=cur&&cur.weaponNote;wn.hidden=!(on&&nt);wn.innerHTML=nt?"<i></i>"+nt:"";
     if(on&&cur){
       var ws=cur.weapons,mx=Math.max.apply(null,ws.map(function(w){return w.p}));
       gg.innerHTML=ws.map(function(w,i){
         var top=w.p===mx?" top":"";
-        return "<li class='grow' style='--i:"+i+"'><div class='gicon r"+w.s+"'>"+(w.img?"<img src='"+w.img+"' alt='' draggable='false'>":"")+"</div><div class='glabel'><b>"+w.n+"</b><small>"+w.r+"재련</small></div><div class='track'><div class='bar"+top+"' style='--w:"+w.p+"%'></div></div><div class='pct"+top+"'>"+w.p+"%</div></li>";
+        return "<li class='grow' style='--i:"+i+"'><div class='gicon r"+w.s+"'>"+(w.img?"<img src='"+w.img+"' alt='' draggable='false'>":"")+"</div><div class='glabel'><b>"+w.n+"</b><small>"+w.r+"재련</small></div><div class='track'>"+(w.p2!=null?"<div class='bar2' style='--w:"+w.p2+"%'></div>":"")+"<div class='bar"+top+"' style='--w:"+w.p+"%'></div></div><div class='pct"+top+"'>"+w.p+"%"+(w.p2!=null?"<small>"+w.p2+"%</small>":"")+"</div></li>";
       }).join("");
     }
   }
